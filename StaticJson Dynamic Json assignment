@@ -1,0 +1,30 @@
+ this.http.get('./assets/personal-details.json').subscribe(
+          data => {
+            this.personalData = data;
+            this.personalData.forEach(element => {
+              let splitData = element.modalName.split('.');
+              let value = splitData[0] == 'Transactions[0]' ? this.transactions.Transactions[0] : '';
+              for (let j = 1; j < splitData.length; j++) {
+                if(value!=''){
+                  value = splitData[j] == 'Nominee[0]' ? value.Nominee[0] 
+                  : splitData[j] == 'BasePlanDetails[0]' ? value.BasePlanDetails[0] 
+                  : splitData[j] == 'Trustee[0]' ? value.Trustee
+                  : value[splitData[j]]!=null ? value[splitData[j]]: '';
+                }
+              }
+              element.modalName = value;
+            });
+            
+            Example Static Json
+           
+{
+        "fieldName": "Example",
+        "modalName": "Transactions[0].TransactionData.sdas.sdasd.dsds",
+        "show": "true"
+    },
+    
+{
+        "fieldName": "Example",
+        "modalName": "Transactions[0].TransactionData.Nominee[0].sdasd.dsds",
+        "show": "true"
+    },
